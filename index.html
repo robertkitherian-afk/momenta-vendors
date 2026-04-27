@@ -204,28 +204,31 @@
   .scroll-hint {
     position: absolute;
     bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 0.6rem;
     opacity: 0;
     animation: fadeUp 0.8s ease 1.2s forwards;
   }
 
   .scroll-hint span {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--white-dim);
+    text-align: center;
   }
 
   .scroll-line {
-    width: 1px;
-    height: 40px;
+    width: 2px;
+    height: 56px;
     background: linear-gradient(to bottom, var(--gold), transparent);
     animation: scrollPulse 2s ease infinite;
+    border-radius: 2px;
   }
 
   @keyframes scrollPulse {
@@ -725,7 +728,7 @@
 
         <div class="form-divider"></div>
 
-        <button type="submit" class="submit-btn">
+        <button type="button" class="submit-btn" onclick="window.location.href='https://tally.so/r/ODjb97'">
           Apply as a Founding Vendor
         </button>
 
