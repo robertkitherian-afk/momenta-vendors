@@ -4,812 +4,215 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Momenta — Join as a Founding Vendor</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0a0e1a;
-    --navy-mid: #111827;
-    --navy-light: #1a2235;
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --gold-dim: rgba(201,168,76,0.15);
-    --white: #ffffff;
-    --white-dim: rgba(255,255,255,0.6);
-    --white-faint: rgba(255,255,255,0.08);
-    --border: rgba(201,168,76,0.2);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Background atmosphere */
-  body::before {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -20%;
-    width: 60%;
-    height: 80%;
-    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -20%;
-    right: -10%;
-    width: 50%;
-    height: 60%;
-    background: radial-gradient(ellipse, rgba(201,168,76,0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .noise {
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.4;
-  }
-
-  /* Nav */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 1.5rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(201,168,76,0.08);
-    backdrop-filter: blur(20px);
-    background: rgba(10,14,26,0.8);
-  }
-
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--white);
-    text-decoration: none;
-  }
-
-  .logo span {
-    color: var(--gold);
-  }
-
-  .nav-badge {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--border);
-    padding: 0.4rem 1rem;
-    border-radius: 2rem;
-    background: var(--gold-dim);
-  }
-
-  /* Hero */
-  .hero {
-    position: relative;
-    z-index: 2;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 8rem 2rem 4rem;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-
-  .hero-eyebrow::before,
-  .hero-eyebrow::after {
-    content: '—';
-    margin: 0 0.75rem;
-    opacity: 0.4;
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-
-  .hero-sub {
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--white-dim);
-    max-width: 480px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.6s forwards;
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 3rem;
-    margin-bottom: 4rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.7s forwards;
-  }
-
-  .stat {
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--gold-light);
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-
-  .stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--white-dim);
-  }
-
-  .stat-divider {
-    width: 1px;
-    background: var(--border);
-    align-self: stretch;
-  }
-
-  /* Scroll indicator */
-  .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 1.2s forwards;
-  }
-
-  .scroll-hint span {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--white-dim);
-    text-align: center;
-  }
-
-  .scroll-line {
-    width: 2px;
-    height: 56px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s ease infinite;
-    border-radius: 2px;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.1); }
-  }
-
-  /* Perks section */
-  .perks {
-    position: relative;
-    z-index: 2;
-    padding: 6rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 300;
-    text-align: center;
-    margin-bottom: 4rem;
-    line-height: 1.2;
-  }
-
-  .perks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5px;
-    background: var(--border);
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .perk {
-    background: var(--navy-mid);
-    padding: 2.5rem;
-    transition: background 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .perk::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .perk:hover {
-    background: var(--navy-light);
-  }
-
-  .perk:hover::before {
-    opacity: 1;
-  }
-
-  .perk-icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.25rem;
-    background: var(--gold-dim);
-    font-size: 1.1rem;
-  }
-
-  .perk-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 500;
-    margin-bottom: 0.6rem;
-    color: var(--white);
-  }
-
-  .perk-desc {
-    font-size: 0.85rem;
-    color: var(--white-dim);
-    line-height: 1.65;
-  }
-
-  /* Form section */
-  .form-section {
-    position: relative;
-    z-index: 2;
-    padding: 4rem 2rem 8rem;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-
-  .form-card {
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .form-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-  }
-
-  .form-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .form-eyebrow {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
-  }
-
-  .form-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
-  }
-
-  .form-sub {
-    font-size: 0.85rem;
-    color: var(--white-dim);
-    line-height: 1.6;
-  }
-
-  .form-group {
-    margin-bottom: 1.25rem;
-  }
-
-  .form-label {
-    display: block;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-
-  .form-input,
-  .form-select {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 0.9rem 1.1rem;
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 300;
-    transition: border-color 0.2s ease, background 0.2s ease;
-    outline: none;
-    appearance: none;
-  }
-
-  .form-input::placeholder {
-    color: rgba(255,255,255,0.2);
-  }
-
-  .form-input:focus,
-  .form-select:focus {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.05);
-  }
-
-  .form-select {
-    cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-  }
-
-  .form-select option {
-    background: var(--navy-mid);
-    color: var(--white);
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .form-divider {
-    height: 1px;
-    background: rgba(255,255,255,0.06);
-    margin: 1.5rem 0;
-  }
-
-  .submit-btn {
-    width: 100%;
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    border-radius: 10px;
-    padding: 1rem 2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
-    margin-top: 0.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .submit-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-  }
-
-  .submit-btn:hover {
-    background: var(--gold-light);
-    transform: translateY(-1px);
-  }
-
-  .submit-btn:hover::after {
-    transform: translateX(100%);
-  }
-
-  .submit-btn:active {
-    transform: translateY(0);
-  }
-
-  .form-note {
-    text-align: center;
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.3);
-    margin-top: 1.25rem;
-    line-height: 1.6;
-  }
-
-  /* Success state */
-  .success-state {
-    display: none;
-    text-align: center;
-    padding: 2rem 0;
-  }
-
-  .success-icon {
-    width: 64px;
-    height: 64px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    background: var(--gold-dim);
-    font-size: 1.5rem;
-  }
-
-  .success-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 400;
-    margin-bottom: 0.75rem;
-  }
-
-  .success-sub {
-    font-size: 0.9rem;
-    color: var(--white-dim);
-    line-height: 1.6;
-  }
-
-  /* Trust bar */
-  .trust-bar {
-    position: relative;
-    z-index: 2;
-    border-top: 1px solid rgba(201,168,76,0.1);
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-  }
-
-  .trust-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--white-dim);
-    letter-spacing: 0.05em;
-  }
-
-  .trust-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex-shrink: 0;
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Mobile */
-  @media (max-width: 600px) {
-    nav { padding: 1.25rem 1.5rem; }
-    .hero-stats { gap: 1.5rem; }
-    .stat-num { font-size: 1.5rem; }
-    .form-card { padding: 2rem 1.5rem; }
-    .form-row { grid-template-columns: 1fr; }
-    .perks { padding: 4rem 1.5rem; }
-  }
+:root{--navy:#080c18;--navy-2:#0e1528;--navy-3:#141e36;--navy-4:#1a2640;--gold:#c9a84c;--gold-l:#e2c97e;--gold-dim:rgba(201,168,76,0.12);--gold-border:rgba(201,168,76,0.22);--white:#ffffff;--w60:rgba(255,255,255,0.6);--w40:rgba(255,255,255,0.4);--w20:rgba(255,255,255,0.2);--w08:rgba(255,255,255,0.08);--w04:rgba(255,255,255,0.04);--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--ease:cubic-bezier(0.16,1,0.3,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:var(--sans);font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px)}
+.orb-1{width:600px;height:600px;top:-200px;left:-200px;background:radial-gradient(circle,rgba(201,168,76,0.07) 0%,transparent 70%)}
+.orb-2{width:500px;height:500px;bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(201,168,76,0.05) 0%,transparent 70%)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2.5rem;height:72px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(24px) saturate(1.4);background:rgba(8,12,24,0.7);border-bottom:1px solid rgba(201,168,76,0.06)}
+.logo{font-family:var(--serif);font-size:1.5rem;font-weight:400;letter-spacing:0.06em;color:var(--white);text-decoration:none}
+.logo-dot{color:var(--gold)}
+.nav-pill{font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-border);padding:0.45rem 1.1rem;border-radius:2rem;background:var(--gold-dim)}
+section{position:relative;z-index:2}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 2rem 5rem}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:0.65rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:0;animation:rise 0.8s var(--ease) 0.1s forwards}
+.hero-tag-line{width:24px;height:1px;background:var(--gold);opacity:0.5}
+.hero-h1{font-family:var(--serif);font-size:clamp(3.5rem,9vw,7.5rem);font-weight:300;line-height:1.02;letter-spacing:-0.02em;margin-bottom:1.5rem;opacity:0;animation:rise 0.9s var(--ease) 0.25s forwards}
+.hero-h1 em{font-style:italic;color:var(--gold-l)}
+.hero-p{font-size:1rem;font-weight:300;color:var(--w60);line-height:1.75;max-width:460px;margin-bottom:3rem;opacity:0;animation:rise 0.9s var(--ease) 0.4s forwards}
+.hero-stats{display:flex;align-items:center;margin-bottom:4rem;border:1px solid var(--gold-border);border-radius:1rem;overflow:hidden;background:var(--w04);backdrop-filter:blur(12px);opacity:0;animation:rise 0.9s var(--ease) 0.55s forwards}
+.stat{padding:1.1rem 2rem;text-align:center}
+.stat+.stat{border-left:1px solid var(--gold-border)}
+.stat-n{font-family:var(--serif);font-size:1.8rem;font-weight:400;color:var(--gold-l);line-height:1;margin-bottom:0.25rem}
+.stat-l{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--w40)}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#07090f;font-family:var(--sans);font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 2.5rem;border-radius:3rem;text-decoration:none;border:none;cursor:pointer;transition:transform 0.2s var(--ease),background 0.2s ease;opacity:0;animation:rise 0.9s var(--ease) 0.7s forwards}
+.hero-cta:hover{background:var(--gold-l);transform:translateY(-2px)}
+.scroll-bar{position:absolute;bottom:2.5rem;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:rise 1s var(--ease) 1.2s forwards}
+.scroll-bar span{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--w40)}
+.scroll-bar-line{width:1.5px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);border-radius:2px;animation:pulse 2.5s ease infinite}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+.marquee-wrap{position:relative;z-index:2;border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);padding:1rem 0;overflow:hidden;background:var(--w04)}
+.marquee-track{display:flex;animation:marquee 28s linear infinite;width:max-content}
+.marquee-item{display:flex;align-items:center;gap:20px;padding:0 40px;white-space:nowrap;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold)}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0.4}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.features{padding:7rem 2rem;max-width:1100px;margin:0 auto}
+.section-eyebrow{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;text-align:center}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:300;text-align:center;line-height:1.15;margin-bottom:4rem}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);border-radius:1.25rem;overflow:hidden}
+.feat{background:var(--navy-2);padding:2rem 1.75rem;transition:background 0.3s ease;position:relative;overflow:hidden}
+.feat::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s ease}
+.feat:hover{background:var(--navy-3)}
+.feat:hover::after{opacity:1}
+.feat-num{font-family:var(--serif);font-size:2.5rem;font-weight:300;color:var(--gold-border);line-height:1;margin-bottom:1rem}
+.feat-title{font-size:0.9rem;font-weight:500;margin-bottom:0.6rem}
+.feat-desc{font-size:0.82rem;color:var(--w60);line-height:1.65}
+.cvo-banner{position:relative;z-index:2;margin:0 2rem 4rem;border:1px solid var(--gold-border);border-radius:1.25rem;background:linear-gradient(135deg,var(--navy-3) 0%,var(--navy-4) 100%);padding:3rem 3.5rem;display:flex;align-items:center;gap:3rem;overflow:hidden}
+.cvo-banner::before{content:'';position:absolute;top:-60px;right:-60px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%)}
+.cvo-star{font-size:2rem;color:var(--gold);flex-shrink:0;width:80px;height:80px;border-radius:50%;border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;background:var(--gold-dim)}
+.cvo-body{flex:1}
+.cvo-tag{font-size:0.6rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);padding:0.3rem 0.8rem;border-radius:2rem;display:inline-block;margin-bottom:0.75rem}
+.cvo-title{font-family:var(--serif);font-size:1.8rem;font-weight:400;margin-bottom:0.6rem;line-height:1.2}
+.cvo-title em{font-style:italic;color:var(--gold-l)}
+.cvo-desc{font-size:0.88rem;color:var(--w60);line-height:1.65;max-width:520px}
+.form-wrap{position:relative;z-index:2;padding:2rem 2rem 6rem;max-width:680px;margin:0 auto}
+.form-card{background:var(--navy-2);border:1px solid var(--gold-border);border-radius:1.5rem;padding:3rem;position:relative;overflow:hidden}
+.form-card::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.form-eyebrow{font-size:0.65rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:0.6rem}
+.form-title{font-family:var(--serif);font-size:2.4rem;font-weight:400;text-align:center;margin-bottom:0.6rem;line-height:1.15}
+.form-sub{font-size:0.85rem;color:var(--w60);text-align:center;line-height:1.65;margin-bottom:2rem}
+.form-divider{height:1px;background:var(--w08);margin:1.25rem 0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.65rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.45rem}
+.field input,.field select{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--w20);border-radius:0.7rem;padding:0.85rem 1.1rem;color:var(--white);font-family:var(--sans);font-size:0.9rem;font-weight:300;transition:border-color 0.25s ease,background 0.25s ease;outline:none;appearance:none}
+.field input::placeholder{color:var(--w40)}
+.field input:focus,.field select:focus{border-color:var(--gold);background:rgba(201,168,76,0.05)}
+.field select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
+.field select option{background:#111827;color:var(--white)}
+.btn-submit{width:100%;margin-top:0.5rem;background:var(--gold);color:#07090f;font-family:var(--sans);font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:1rem 2rem;border-radius:0.7rem;border:none;cursor:pointer;transition:background 0.2s ease,transform 0.15s var(--ease)}
+.btn-submit:hover{background:var(--gold-l);transform:translateY(-1px)}
+.btn-submit:active{transform:translateY(0)}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.form-note{font-size:0.72rem;color:var(--w40);text-align:center;line-height:1.6;margin-top:1rem}
+.form-note a{color:var(--gold);text-decoration:none;font-weight:500}
+.success{display:none;text-align:center;padding:2.5rem 0}
+.success-ring{width:72px;height:72px;border-radius:50%;border:1px solid var(--gold);background:var(--gold-dim);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:var(--serif);font-size:1.8rem;color:var(--gold)}
+.success-title{font-family:var(--serif);font-size:2.2rem;font-weight:400;margin-bottom:0.75rem}
+.success-sub{font-size:0.9rem;color:var(--w60);line-height:1.7}
+.success-sub em{color:var(--gold-l);font-style:italic}
+.footer-bar{position:relative;z-index:2;border-top:1px solid var(--gold-border);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:2rem}
+.footer-item{display:flex;align-items:center;gap:8px;font-size:0.72rem;color:var(--w40);letter-spacing:0.06em}
+.footer-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:0.6}
+.footer-item a{color:var(--gold);text-decoration:none}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s var(--ease),transform 0.7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:680px){nav{padding:0 1.25rem}.hero-stats{flex-direction:column;border-radius:0.75rem}.stat+.stat{border-left:none;border-top:1px solid var(--gold-border)}.features-grid{grid-template-columns:1fr}.cvo-banner{flex-direction:column;padding:2rem;margin:0 1rem 3rem}.form-card{padding:2rem 1.5rem}.row2{grid-template-columns:1fr}.form-wrap{padding:1rem 1rem 4rem}}
 </style>
 </head>
 <body>
-
-<div class="noise"></div>
-
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 <nav>
-  <a href="https://momentaevents.com" class="logo">momenta<span>.</span></a>
-  <div class="nav-badge">Founding Vendors</div>
+  <a href="https://momentaevents.com" class="logo">momenta<span class="logo-dot">.</span></a>
+  <div class="nav-pill">Founding Vendors</div>
 </nav>
-
-<!-- Hero -->
 <section class="hero">
-  <p class="hero-eyebrow">London's Event Platform</p>
-  <h1 class="hero-title">
-    Your talent.<br>
-    Our <em>platform.</em><br>
-    Their moment.
-  </h1>
-  <p class="hero-sub">
-    Momenta is building the UK's first end-to-end event booking platform. 
-    Join as a Founding Vendor — get your first clients for free, 
-    before we open to the public.
-  </p>
-
+  <p class="hero-tag"><span class="hero-tag-line"></span>London's Event Platform<span class="hero-tag-line"></span></p>
+  <h1 class="hero-h1">Your talent.<br>Our <em>platform.</em><br>Their moment.</h1>
+  <p class="hero-p">Momenta is building the UK's first end-to-end event booking platform. Join as a Founding Vendor — get your first clients for free, before we open to the public.</p>
   <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">£0</div>
-      <div class="stat-label">To join</div>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <div class="stat-num">Free</div>
-      <div class="stat-label">First bookings</div>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <div class="stat-num">Early</div>
-      <div class="stat-label">Access</div>
-    </div>
+    <div class="stat"><div class="stat-n">£0</div><div class="stat-l">To join</div></div>
+    <div class="stat"><div class="stat-n">Free</div><div class="stat-l">First bookings</div></div>
+    <div class="stat"><div class="stat-n">48h</div><div class="stat-l">Review time</div></div>
+    <div class="stat"><div class="stat-n">Early</div><div class="stat-l">Access</div></div>
   </div>
-
-  <div class="scroll-hint">
-    <span>Discover more</span>
-    <div class="scroll-line"></div>
+  <a href="#apply" class="hero-cta">Apply now &rarr;</a>
+  <div class="scroll-bar">
+    <span>Discover</span>
+    <div class="scroll-bar-line"></div>
   </div>
 </section>
-
-<!-- Perks -->
-<section class="perks">
-  <p class="section-label">Why join Momenta</p>
-  <h2 class="section-title">Built for vendors who<br>take their craft seriously</h2>
-
-  <div class="perks-grid">
-    <div class="perk">
-      <div class="perk-icon">✦</div>
-      <h3 class="perk-title">Zero commission to start</h3>
-      <p class="perk-desc">As a Founding Vendor you pay nothing until Momenta launches publicly. Your first bookings are entirely free. We grow together.</p>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">◈</div>
-      <h3 class="perk-title">Clients come to you</h3>
-      <p class="perk-desc">No more chasing leads or ghosted enquiries. Customers browse, select and pay a deposit through Momenta — you get notified and get to work.</p>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">⬡</div>
-      <h3 class="perk-title">Guaranteed payment</h3>
-      <p class="perk-desc">Customer payments are held securely and released to you 48 hours after the event. No chasing invoices. No bank transfers. No awkward follow-ups.</p>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">◎</div>
-      <h3 class="perk-title">Founding Vendor badge</h3>
-      <p class="perk-desc">The first vendors on Momenta get a permanent Founding Vendor badge on their profile. When we scale, you'll already have the reviews and reputation.</p>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">❋</div>
-      <h3 class="perk-title">Open to everyone</h3>
-      <p class="perk-desc">Whether you're an established agency or a student photographer building their portfolio — if your work is quality, there's a place for you on Momenta.</p>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">⟡</div>
-      <h3 class="perk-title">You set your price</h3>
-      <p class="perk-desc">Full pricing control. Set your rates, your availability, your packages. Momenta never undercuts or commoditises your work. Your craft, your terms.</p>
-    </div>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>Zero commission</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Guaranteed payment</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Founding Vendor badge</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Clients come to you</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>You set your price</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Open to everyone</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>London based</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Reviewed personally</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Zero commission</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Guaranteed payment</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Founding Vendor badge</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Clients come to you</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>You set your price</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Open to everyone</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>London based</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Reviewed personally</span><div class="marquee-dot"></div></div>
+  </div>
+</div>
+<section class="features">
+  <p class="section-eyebrow reveal">Why join Momenta</p>
+  <h2 class="section-title reveal">Built for vendors who take<br>their craft seriously</h2>
+  <div class="features-grid reveal">
+    <div class="feat"><div class="feat-num">01</div><h3 class="feat-title">Zero commission to start</h3><p class="feat-desc">As a Founding Vendor you pay nothing until Momenta launches publicly. Your first bookings are entirely free. We grow together.</p></div>
+    <div class="feat"><div class="feat-num">02</div><h3 class="feat-title">Clients come to you</h3><p class="feat-desc">No more chasing leads or ghosted enquiries. Customers browse, select and pay a deposit — you get notified and get to work.</p></div>
+    <div class="feat"><div class="feat-num">03</div><h3 class="feat-title">Guaranteed payment</h3><p class="feat-desc">Payments held securely, released 48 hours after your event. No chasing invoices. No bank transfers. No awkward follow-ups.</p></div>
+    <div class="feat"><div class="feat-num">04</div><h3 class="feat-title">Founding Vendor badge</h3><p class="feat-desc">The first vendors on Momenta get a permanent badge on their profile. When we scale, you'll already have the reviews and reputation.</p></div>
+    <div class="feat"><div class="feat-num">05</div><h3 class="feat-title">Open to everyone</h3><p class="feat-desc">Established agency or student photographer — if your work is quality, there's a place for you on Momenta.</p></div>
+    <div class="feat"><div class="feat-num">06</div><h3 class="feat-title">You set your price</h3><p class="feat-desc">Full pricing control. Set your rates, your availability, your packages. Your craft, your terms. Always.</p></div>
   </div>
 </section>
-
-<!-- Form -->
-<section class="form-section">
-  <div class="form-card">
-    <div class="form-header">
+<div class="cvo-banner reveal">
+  <div class="cvo-star">&#10022;</div>
+  <div class="cvo-body">
+    <span class="cvo-tag">Exclusive opportunity</span>
+    <h3 class="cvo-title">Become our <em>Chief Vendors Officer</em></h3>
+    <p class="cvo-desc">The best performing Founding Vendor — the one who brings their business, drives results and grows with us from day one — may be offered a seat on the Momenta board as Chief Vendors Officer when we go live. This isn't just a platform. It's your platform too.</p>
+  </div>
+</div>
+<section class="form-wrap" id="apply">
+  <div class="form-card reveal">
+    <div id="form-content">
       <p class="form-eyebrow">Founding Vendor Application</p>
       <h2 class="form-title">Join the waitlist</h2>
-      <p class="form-sub">We're hand-picking London's best vendors before we launch. Tell us about your work and we'll be in touch personally.</p>
-    </div>
-
-    <div id="form-content">
+      <p class="form-sub">We're hand-picking London's best vendors before we launch. Tell us about your work and we'll be in touch personally within 48 hours.</p>
       <form id="vendorForm" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First name</label>
-            <input type="text" name="first_name" class="form-input" placeholder="Sarah" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Last name</label>
-            <input type="text" name="last_name" class="form-input" placeholder="Johnson" required>
-          </div>
+        <div class="row2">
+          <div class="field"><label>First name</label><input type="text" name="first_name" placeholder="Sarah" required></div>
+          <div class="field"><label>Last name</label><input type="text" name="last_name" placeholder="Johnson" required></div>
         </div>
-
-        <div class="form-group">
-          <label class="form-label">Email address</label>
-          <input type="email" name="email" class="form-input" placeholder="hello@yourbusiness.com" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Phone number</label>
-          <input type="tel" name="phone" class="form-input" placeholder="+44 7700 000000">
-        </div>
-
+        <div class="field"><label>Email address</label><input type="email" name="email" placeholder="hello@yourbusiness.com" required></div>
+        <div class="field"><label>Phone number</label><input type="tel" name="phone" placeholder="+44 7700 000000"></div>
         <div class="form-divider"></div>
-
-        <div class="form-group">
-          <label class="form-label">Your category</label>
-          <select name="category" class="form-select" required>
+        <div class="field">
+          <label>Your category</label>
+          <select name="category" required>
             <option value="" disabled selected>Select your craft</option>
-            <option>Photography</option>
-            <option>Videography</option>
-            <option>Catering & Food</option>
-            <option>Venue</option>
-            <option>Floral & Decoration</option>
-            <option>DJ & Music</option>
-            <option>Hair & Makeup</option>
-            <option>Wedding Cake & Desserts</option>
-            <option>Event Planning</option>
-            <option>Transport & Cars</option>
-            <option>Lighting & AV</option>
-            <option>Mehndi & Cultural</option>
-            <option>Other</option>
+            <option>Photography</option><option>Videography</option><option>Catering &amp; Food</option>
+            <option>Venue</option><option>Floral &amp; Decoration</option><option>DJ &amp; Music</option>
+            <option>Hair &amp; Makeup</option><option>Wedding Cake &amp; Desserts</option>
+            <option>Event Planning</option><option>Transport &amp; Cars</option>
+            <option>Lighting &amp; AV</option><option>Mehndi &amp; Cultural</option><option>Other</option>
           </select>
         </div>
-
-        <div class="form-group">
-          <label class="form-label">Business or trading name</label>
-          <input type="text" name="business_name" class="form-input" placeholder="Your business name">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Portfolio or Instagram link</label>
-          <input type="url" name="portfolio" class="form-input" placeholder="instagram.com/yourbusiness">
-        </div>
-
+        <div class="field"><label>Business or trading name</label><input type="text" name="business_name" placeholder="Your business name"></div>
+        <div class="field"><label>Portfolio or Instagram link</label><input type="url" name="portfolio" placeholder="instagram.com/yourbusiness"></div>
         <div class="form-divider"></div>
-
-        <button type="submit" class="submit-btn" id="submitBtn">
-          Apply as a Founding Vendor
-        </button>
-
+        <button type="submit" class="btn-submit" id="submitBtn">Apply as a Founding Vendor</button>
         <p class="form-note">
           Free to join. No commitment until we launch.<br>
-          We review every application personally within 48 hours.
+          We review every application personally within 48 hours.<br><br>
+          Questions? <a href="mailto:vendors@momentaevents.com">vendors@momentaevents.com</a>
         </p>
       </form>
     </div>
-
-    <div class="success-state" id="success">
-      <div class="success-icon">✦</div>
+    <div class="success" id="success">
+      <div class="success-ring">&#10022;</div>
       <h3 class="success-title">You're on the list.</h3>
-      <p class="success-sub">
-        Welcome to Momenta, Founding Vendor.<br><br>
-        We'll review your application and reach out personally within 48 hours. You're part of something that's just getting started.<br><br>
-        <em style="color:var(--gold)">You Dream. We Create.</em>
-      </p>
+      <p class="success-sub">Welcome to Momenta, Founding Vendor.<br><br>We'll review your application and reach out personally within 48 hours. You're part of something that's just getting started.<br><br><em>You Dream. We Create.</em></p>
     </div>
   </div>
 </section>
-
-<!-- Trust bar -->
-<div class="trust-bar">
-  <div class="trust-item"><div class="trust-dot"></div> Zero cost to join</div>
-  <div class="trust-item"><div class="trust-dot"></div> London based</div>
-  <div class="trust-item"><div class="trust-dot"></div> Reviewed personally</div>
-  <div class="trust-item"><div class="trust-dot"></div> momentaevents.com</div>
+<div class="footer-bar">
+  <div class="footer-item"><div class="footer-dot"></div>Zero cost to join</div>
+  <div class="footer-item"><div class="footer-dot"></div>London based</div>
+  <div class="footer-item"><div class="footer-dot"></div>Reviewed personally</div>
+  <div class="footer-item"><div class="footer-dot"></div><a href="mailto:vendors@momentaevents.com">vendors@momentaevents.com</a></div>
+  <div class="footer-item"><div class="footer-dot"></div><a href="https://momentaevents.com">momentaevents.com</a></div>
 </div>
-
-<script src="https://tally.so/widgets/embed.js"></script>
 <script>
-async function handleSubmit(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-
-  const form = document.getElementById('vendorForm');
-  const data = new FormData(form);
-
-  try {
-    const res = await fetch('https://formspree.io/f/xgorbyeq', {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (res.ok) {
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('success').style.display = 'block';
-      window.scrollTo({ top: document.querySelector('.form-section').offsetTop - 100, behavior: 'smooth' });
-    } else {
-      btn.textContent = 'Apply as a Founding Vendor';
-      btn.disabled = false;
-      alert('Something went wrong. Please try again.');
-    }
-  } catch(err) {
-    btn.textContent = 'Apply as a Founding Vendor';
-    btn.disabled = false;
-    alert('Something went wrong. Please try again.');
-  }
-}
-
-// Subtle entrance animations on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(el => {
-    if (el.isIntersecting) {
-      el.target.style.opacity = '1';
-      el.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.perk').forEach((el, i) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(16px)';
-  el.style.transition = `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`;
-  observer.observe(el);
-});
+async function handleSubmit(e){e.preventDefault();const btn=document.getElementById('submitBtn');btn.textContent='Sending...';btn.disabled=true;try{const res=await fetch('https://formspree.io/f/xgorbyeq',{method:'POST',body:new FormData(document.getElementById('vendorForm')),headers:{'Accept':'application/json'}});if(res.ok){document.getElementById('form-content').style.display='none';document.getElementById('success').style.display='block'}else{btn.textContent='Apply as a Founding Vendor';btn.disabled=false}}catch{btn.textContent='Apply as a Founding Vendor';btn.disabled=false}}
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
-
 </body>
 </html>
