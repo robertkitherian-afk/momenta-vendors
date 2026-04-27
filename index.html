@@ -665,40 +665,40 @@
 <!-- Form -->
 <section class="form-section">
   <div class="form-card">
-    <div id="form-content">
-      <div class="form-header">
-        <p class="form-eyebrow">Founding Vendor Application</p>
-        <h2 class="form-title">Join the waitlist</h2>
-        <p class="form-sub">We're hand-picking London's best vendors before we launch. Tell us about your work and we'll be in touch personally.</p>
-      </div>
+    <div class="form-header">
+      <p class="form-eyebrow">Founding Vendor Application</p>
+      <h2 class="form-title">Join the waitlist</h2>
+      <p class="form-sub">We're hand-picking London's best vendors before we launch. Tell us about your work and we'll be in touch personally.</p>
+    </div>
 
+    <div id="form-content">
       <form id="vendorForm" onsubmit="handleSubmit(event)">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">First name</label>
-            <input type="text" class="form-input" placeholder="Sarah" required>
+            <input type="text" name="first_name" class="form-input" placeholder="Sarah" required>
           </div>
           <div class="form-group">
             <label class="form-label">Last name</label>
-            <input type="text" class="form-input" placeholder="Johnson" required>
+            <input type="text" name="last_name" class="form-input" placeholder="Johnson" required>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Email address</label>
-          <input type="email" class="form-input" placeholder="hello@yourbusiness.com" required>
+          <input type="email" name="email" class="form-input" placeholder="hello@yourbusiness.com" required>
         </div>
 
         <div class="form-group">
           <label class="form-label">Phone number</label>
-          <input type="tel" class="form-input" placeholder="+44 7700 000000">
+          <input type="tel" name="phone" class="form-input" placeholder="+44 7700 000000">
         </div>
 
         <div class="form-divider"></div>
 
         <div class="form-group">
           <label class="form-label">Your category</label>
-          <select class="form-select" required>
+          <select name="category" class="form-select" required>
             <option value="" disabled selected>Select your craft</option>
             <option>Photography</option>
             <option>Videography</option>
@@ -718,23 +718,23 @@
 
         <div class="form-group">
           <label class="form-label">Business or trading name</label>
-          <input type="text" class="form-input" placeholder="Your business name">
+          <input type="text" name="business_name" class="form-input" placeholder="Your business name">
         </div>
 
         <div class="form-group">
           <label class="form-label">Portfolio or Instagram link</label>
-          <input type="url" class="form-input" placeholder="instagram.com/yourbusiness">
+          <input type="url" name="portfolio" class="form-input" placeholder="instagram.com/yourbusiness">
         </div>
 
         <div class="form-divider"></div>
 
-        <button type="button" class="submit-btn" onclick="window.location.href='https://tally.so/r/ODjb97'">
+        <button type="submit" class="submit-btn" id="submitBtn">
           Apply as a Founding Vendor
         </button>
 
         <p class="form-note">
-          By applying you agree to Momenta's vendor terms.<br>
-          We review every application personally and respond within 48 hours.
+          Free to join. No commitment until we launch.<br>
+          We review every application personally within 48 hours.
         </p>
       </form>
     </div>
@@ -759,12 +759,38 @@
   <div class="trust-item"><div class="trust-dot"></div> momentaevents.com</div>
 </div>
 
+<script src="https://tally.so/widgets/embed.js"></script>
 <script>
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
-  document.getElementById('form-content').style.display = 'none';
-  document.getElementById('success').style.display = 'block';
-  window.scrollTo({ top: document.querySelector('.form-section').offsetTop - 100, behavior: 'smooth' });
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const form = document.getElementById('vendorForm');
+  const data = new FormData(form);
+
+  try {
+    const res = await fetch('https://formspree.io/f/xgorbyeq', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+      window.scrollTo({ top: document.querySelector('.form-section').offsetTop - 100, behavior: 'smooth' });
+    } else {
+      btn.textContent = 'Apply as a Founding Vendor';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(err) {
+    btn.textContent = 'Apply as a Founding Vendor';
+    btn.disabled = false;
+    alert('Something went wrong. Please try again.');
+  }
 }
 
 // Subtle entrance animations on scroll
