@@ -100,7 +100,7 @@ nav{width:100%;display:flex;flex-direction:column;align-items:center;justify-con
 .popup{background:#0d111c;border:1px solid rgba(218,165,32,0.25);border-radius:4px;padding:3rem 2.5rem;max-width:460px;width:90%;text-align:center;position:relative;transform:scale(0.92) translateY(16px);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);overflow:hidden}
 .popup::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#DAA520,transparent)}
 .popup-overlay.show .popup{transform:scale(1) translateY(0)}
-.popup-icon{width:72px;height:72px;border-radius:50%;border:1px solid rgba(218,165,32,0.35);background:rgba(218,165,32,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2rem}
+.popup-icon{display:none}.confetti-wrap{position:relative;height:70px;margin-bottom:1rem;overflow:visible}.confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;opacity:0;animation:confetti-fall 1.4s ease forwards}@keyframes confetti-fall{0%{opacity:1;transform:translateY(-20px) rotate(0deg) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(90px) rotate(600deg) scale(0.5)}}
 .popup-badge{font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#080808;background:#DAA520;padding:0.25rem 0.8rem;border-radius:2px;display:inline-block;margin-bottom:1rem}
 .popup-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:0.04em;margin-bottom:0.5rem;line-height:1.1}
 .popup-body{font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.75;margin-bottom:1.75rem}
@@ -141,7 +141,7 @@ nav{width:100%;display:flex;flex-direction:column;align-items:center;justify-con
 <!-- Welcome Popup -->
 <div class="popup-overlay" id="popup">
   <div class="popup">
-    <div class="popup-icon">🖤</div>
+    <div class="confetti-wrap" id="confetti-wrap"></div>
     <span class="popup-badge">Founding Vendor</span>
     <h2 class="popup-title">Welcome to the<br>Momenta Family.</h2>
     <p class="popup-body">
@@ -295,9 +295,29 @@ async function handleSubmit(e) {
     else { btn.textContent = 'Claim your Founding Vendor spot'; btn.disabled = false; }
   } catch { btn.textContent = 'Claim your Founding Vendor spot'; btn.disabled = false; }
 }
+function launchConfetti() {
+  const wrap = document.getElementById('confetti-wrap');
+  wrap.innerHTML = '';
+  const colors = ['#DAA520','#ffffff','#f0c030','#c9a84c','#ffe066','#fff','#e2c97e'];
+  const count = 38;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    const size = 6 + Math.random() * 8;
+    const left = 10 + Math.random() * 80;
+    const delay = Math.random() * 0.6;
+    const duration = 1.0 + Math.random() * 0.8;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const shape = Math.random() > 0.5 ? '50%' : '2px';
+    p.style.cssText = `left:${left}%;width:${size}px;height:${size}px;background:${color};border-radius:${shape};animation-delay:${delay}s;animation-duration:${duration}s`;
+    wrap.appendChild(p);
+  }
+}
 function showPopup() {
   document.getElementById('popup').classList.add('show');
   document.body.style.overflow = 'hidden';
+  setTimeout(launchConfetti, 100);
+  setInterval(launchConfetti, 1800);
 }
 function closePopup() {
   document.getElementById('popup').classList.remove('show');
